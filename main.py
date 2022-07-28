@@ -1,12 +1,7 @@
-# project-
+import yaml
 
-A Project to make montecarlo estimations for projects
+tasks = """
 
-## Idea
-
-Have a yaml with a tasks that must be simulated
-
-``` yaml
 - id: 1
   name: Task1
   duration : [2, 5]
@@ -16,4 +11,7 @@ Have a yaml with a tasks that must be simulated
   duration: 5
   parallelization: [0.5, 1.]
   predecesors: [1]
-```
+
+"""
+
+yaml.
