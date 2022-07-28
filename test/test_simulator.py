@@ -5,9 +5,7 @@ import yaml
 class TestParallization(unittest.TestCase):
     def test_one(self):
         tasks="""
-            - id: 1
-              name: Task1
-              duration : 3
+            - duration : 3
               parallelization: 0.5
             """
         t= yaml.safe_load(tasks)
@@ -17,19 +15,24 @@ class TestParallization(unittest.TestCase):
 
     def test_two_in_parallel(self):
         tasks="""
-            - id: 1
-              name: Task1
-              duration : 3
+            - duration : 3
               parallelization: 0.5
-            - id: 2
-              name: Task1
-              duration : 5
+            - duration : 5
+              parallelization: 0.5
+            """
+    def test_tree_semi_parallel(self):
+        tasks="""
+            - duration : 3
+              parallelization: 0.5
+            - duration : 5
+              parallelization: 1
+            - duration : 5
               parallelization: 0.5
             """
         t= yaml.safe_load(tasks)
         result=simulator.run(t)
 
-        self.assertEqual(result, 5)
+        self.assertEqual(result, 10)
 
 if __name__ == '__main__':
     unittest.main()

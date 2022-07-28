@@ -2,12 +2,17 @@ def run(tasks):
     parallel= 0
     groups=[]
     works=[]
-    for t in tasks:
-        parallel+=t["parallelization"]
-        if (parallel<=1):
-            works.append(t["duration"])
-        else:
-            groups.append(works)
-            works=[t["duration"]]
-    groups.append(works)
+    while (len(tasks)>0):
+        pending=[]
+        for t in tasks:
+            p=t["parallelization"]
+            if (parallel+p<=1):
+                parallel+=p
+                works.append(t["duration"])
+            else:
+                pending.append(t)
+        groups.append(works)
+        works=[]
+        parallel=0
+        tasks=pending
     return sum((max(g) for g in groups))
