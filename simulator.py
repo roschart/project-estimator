@@ -36,14 +36,14 @@ def can_be_executed(task, done, acc_parallel):
 
 
 def validate(tasks):
-    tasks_with_id = dict()
+    tasks_with_id = set()
     tasks_without_id = []
     for t in tasks:
         if "id" in t:
             id = t["id"]
             if id in tasks_with_id:
                 raise Exception(f"Duplicate id '{id}'")
-            tasks_with_id[id] = t
+            tasks_with_id.add(id)
         else:
             tasks_without_id.append(t)
     for t in tasks:
