@@ -53,25 +53,9 @@ class TestDependencies(unittest.TestCase):
         self.assertEqual(result, 7)
 
 
-class TestValidation(unittest.TestCase):
-    def test_not_duplicated_id(self):
-        tasks = """
-            - id: 1
-              duration : 3
-              parallelization: 0.5
-            - id: 1
-              duration: 4
-              parallelization: 0.5
-              after: 1
-            """
-        t = yaml.safe_load(tasks)
-
-        with self.assertRaises(Exception):
-            simulator.run(t)
-
-    def test_mix_depends_and_parallel(self):
-        cases = [
-            {"tasks": """
+def test_mix_depends_and_parallel(self):
+    cases = [
+        {"tasks": """
             - id: 1
               duration : 3
               parallelization: 0.5
@@ -88,8 +72,8 @@ class TestValidation(unittest.TestCase):
               parallelization: 0.5
               after: 2
             """,
-             "expect": 13},
-            {"tasks": """
+         "expect": 13},
+        {"tasks": """
             - id: 1
               duration : 3
               parallelization: 0.5
@@ -106,14 +90,31 @@ class TestValidation(unittest.TestCase):
               parallelization: 0.6
               after: 2
             """,
-             "expect": 18}
-        ]
+         "expect": 18}
+    ]
 
-        for i in range(len(cases)):
-            c = cases[i]
-            t = yaml.safe_load(c["tasks"])
-            result = simulator.run(t)
-            self.assertEqual(result, c["expect"], f"Test fail in case {i}")
+    for i in range(len(cases)):
+        c = cases[i]
+        t = yaml.safe_load(c["tasks"])
+        result = simulator.run(t)
+        self.assertEqual(result, c["expect"], f"Test fail in case {i}")
+
+
+class TestValidation(unittest.TestCase):
+    def test_not_duplicated_id(self):
+        tasks = """
+            - id: 1
+              duration : 3
+              parallelization: 0.5
+            - id: 1
+              duration: 4
+              parallelization: 0.5
+              after: 1
+            """
+        t = yaml.safe_load(tasks)
+
+        with self.assertRaises(Exception):
+            simulator.run(t)
 
 
 if __name__ == '__main__':
