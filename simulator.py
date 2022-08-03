@@ -22,6 +22,9 @@ def run(tasks):
         works = []
         done = group_done.union(done)
         acc_parallel = 0
+        if(len(pending) == len(tasks)):
+            raise Exception(
+                "The project can be exectued, check dependencies or parallel")
         tasks = pending
     return sum((max(g) for g in groups))
 

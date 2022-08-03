@@ -130,6 +130,26 @@ class TestValidation(unittest.TestCase):
         with self.assertRaises(Exception):
             simulator.run(t)
 
+    def test_deadlocks(self):
+        tasks = """
+            - id: 1
+              duration : 3
+              parallelization: 0.5
+              after: 3
+            - id: 2
+              duration: 4
+              parallelization: 0.5
+              after: 1
+            - id: 3
+              duration: 4
+              parallelization: 0.5
+              after: 2
+            """
+        t = yaml.safe_load(tasks)
+
+        with self.assertRaises(Exception):
+            simulator.run(t)
+
 
 if __name__ == '__main__':
     unittest.main()
