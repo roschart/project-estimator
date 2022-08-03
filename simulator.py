@@ -9,9 +9,9 @@ def run(tasks):
     done = set()
     while (len(tasks) > 0):
         pending = []
-        group_done=set()
+        group_done = set()
         for t in tasks:
-            if (can_be_executed(t, done,acc_parallel)):
+            if (can_be_executed(t, done, acc_parallel)):
                 acc_parallel += t["parallelization"]
                 works.append(t["duration"])
                 if "id" in t:
@@ -20,19 +20,19 @@ def run(tasks):
                 pending.append(t)
         groups.append(works)
         works = []
-        done=group_done.union(done)
+        done = group_done.union(done)
         acc_parallel = 0
         tasks = pending
     return sum((max(g) for g in groups))
 
+
 def can_be_executed(task, done, acc_parallel):
     if "after" in task and not task["after"] in done:
-       return False
+        return False
     p = task["parallelization"]
     if (acc_parallel + p > 1):
         return False
     return True
-
 
 
 def validate(tasks):
