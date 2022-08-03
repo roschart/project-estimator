@@ -115,6 +115,21 @@ class TestValidation(unittest.TestCase):
         with self.assertRaises(Exception):
             simulator.run(t)
 
+    def test_valid_after_id(self):
+        tasks = """
+            - id: 1
+              duration : 3
+              parallelization: 0.5
+            - id: 2
+              duration: 4
+              parallelization: 0.5
+              after: "not correct"
+            """
+        t = yaml.safe_load(tasks)
+
+        with self.assertRaises(Exception):
+            simulator.run(t)
+
 
 if __name__ == '__main__':
     unittest.main()
