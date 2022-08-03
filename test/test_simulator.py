@@ -52,52 +52,51 @@ class TestDependencies(unittest.TestCase):
 
         self.assertEqual(result, 7)
 
+    def test_mix_depends_and_parallel(self):
+        cases = [
+            {"tasks": """
+                - id: 1
+                  duration : 3
+                  parallelization: 0.5
+                - id: 2
+                  duration : 5
+                  parallelization: 0.5
+                  after: 1
+                - id: 3
+                  duration : 5
+                  parallelization: 0.5
+                  after: 2
+                - id: 4
+                  duration : 5
+                  parallelization: 0.5
+                  after: 2
+                """,
+             "expect": 13},
+            {"tasks": """
+                - id: 1
+                  duration : 3
+                  parallelization: 0.5
+                - id: 2
+                  duration : 5
+                  parallelization: 0.5
+                  after: 1
+                - id: 3
+                  duration : 5
+                  parallelization: 0.5
+                  after: 2
+                - id: 4
+                  duration : 5
+                  parallelization: 0.6
+                  after: 2
+                """,
+             "expect": 18}
+        ]
 
-def test_mix_depends_and_parallel(self):
-    cases = [
-        {"tasks": """
-            - id: 1
-              duration : 3
-              parallelization: 0.5
-            - id: 2
-              duration : 5
-              parallelization: 0.5
-              after: 1
-            - id: 3
-              duration : 5
-              parallelization: 0.5
-              after: 2
-            - id: 4
-              duration : 5
-              parallelization: 0.5
-              after: 2
-            """,
-         "expect": 13},
-        {"tasks": """
-            - id: 1
-              duration : 3
-              parallelization: 0.5
-            - id: 2
-              duration : 5
-              parallelization: 0.5
-              after: 1
-            - id: 3
-              duration : 5
-              parallelization: 0.5
-              after: 2
-            - id: 4
-              duration : 5
-              parallelization: 0.6
-              after: 2
-            """,
-         "expect": 18}
-    ]
-
-    for i in range(len(cases)):
-        c = cases[i]
-        t = yaml.safe_load(c["tasks"])
-        result = simulator.run(t)
-        self.assertEqual(result, c["expect"], f"Test fail in case {i}")
+        for i in range(len(cases)):
+            c = cases[i]
+            t = yaml.safe_load(c["tasks"])
+            result = simulator.run(t)
+            self.assertEqual(result, c["expect"], f"Test fail in case {i}")
 
 
 class TestValidation(unittest.TestCase):
