@@ -49,6 +49,21 @@ class TestDependencies(unittest.TestCase):
 
         self.assertEqual(resutl, 7)
 
+class TestValidation(unittest.TestCase):
+    def test_not_duplicated_id(self):
+        tasks="""
+            - id: 1
+              duration : 3
+              parallelization: 0.5
+            - id: 1
+              duration: 4
+              parallelization: 0.5
+              after: 1
+            """
+        t= yaml.safe_load(tasks)
+        with self.assertRaises(Exception):
+          simulator.run(t)
+
 
 if __name__ == '__main__':
     unittest.main()
