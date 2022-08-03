@@ -34,5 +34,21 @@ class TestParallization(unittest.TestCase):
 
         self.assertEqual(result, 10)
 
+class TestDependencies(unittest.TestCase):
+    def test_after_one(self):
+        tasks="""
+            - id: 1
+              duration : 3
+              parallelization: 0.5
+            - duration: 4
+              parallelization: 0.5
+              after: 1
+            """
+        t= yaml.safe_load(tasks)
+        resutl=simulator.run(t)
+
+        self.assertEqual(resutl, 7)
+
+
 if __name__ == '__main__':
     unittest.main()
