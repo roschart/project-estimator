@@ -1,6 +1,7 @@
 import unittest
 import simulator
 import yaml
+import random
 
 
 class TestParallization(unittest.TestCase):
@@ -151,5 +152,13 @@ class TestValidation(unittest.TestCase):
             simulator.run(t)
 
 
-if __name__ == '__main__':
-    unittest.main()
+class TestRangeDurations(unittest.TestCase):
+    def test_one_range(self):
+        tasks = """
+            - duration : [3, 5]
+              parallelization: 0.5
+            """
+        t = yaml.safe_load(tasks)
+        random.seed(42)
+        resutl = simulator.run(t)
+        self.assertEqual(resutl, 5)

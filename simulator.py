@@ -1,4 +1,5 @@
-from operator import itemgetter
+
+import random
 
 
 def run(tasks):
@@ -13,7 +14,7 @@ def run(tasks):
         for t in tasks:
             if (can_be_executed(t, done, acc_parallel)):
                 acc_parallel += t["parallelization"]
-                works.append(t["duration"])
+                works.append(duration(t))
                 if "id" in t:
                     group_done.add(t["id"])
             else:
@@ -27,6 +28,16 @@ def run(tasks):
                 "The project can be exectued, check dependencies or parallel")
         tasks = pending
     return sum((max(g) for g in groups))
+
+
+def duration(t):
+    d = t["duration"]
+    match d:
+        case int(x):
+            return x
+        case list(x):
+            return random.randint(*d)
+    raise Exception("Not valid duration")
 
 
 def can_be_executed(task, done, acc_parallel):
