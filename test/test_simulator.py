@@ -11,9 +11,9 @@ class TestParallization(unittest.TestCase):
               parallelization: 0.5
             """
         t = yaml.safe_load(tasks)
-        resutl = simulator.run(t)
+        result = simulator.run(t)
 
-        self.assertEqual(resutl, 3)
+        self.assertEqual(result, 3)
 
     def test_two_in_parallel(self):
         tasks = """
@@ -153,12 +153,19 @@ class TestValidation(unittest.TestCase):
 
 
 class TestRangeDurations(unittest.TestCase):
-    def test_one_range(self):
-        tasks = """
-            - duration : [3, 5]
-              parallelization: 0.5
-            """
-        t = yaml.safe_load(tasks)
-        random.seed(42)
-        resutl = simulator.run(t)
-        self.assertEqual(resutl, 5)
+    def test_ranges(self):
+        cases = [{
+            "tasks": """
+                  - duration : [3, 5]
+                    parallelization: 0.5
+                  """,
+            "expected": 5
+        }]
+
+        for i in range(len(cases)):
+            c = cases[i]
+
+            t = yaml.safe_load(c["tasks"])
+            random.seed(42)
+            result = simulator.run(t)
+            self.assertEqual(result, c["expected"], f"Error with case {i}")
