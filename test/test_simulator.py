@@ -166,8 +166,18 @@ class TestRangeDurations(unittest.TestCase):
                   - duration : [6, 15]
                     parallelization: 0.5
                   """,
-             "expected": 7
-             }]
+             "expected": 7},
+            {"tasks":"""
+            - duration : [3, 6]
+              parallelization: 0.5
+            - duration : [6, 10]
+              parallelization: 1
+            - duration : [2, 8]
+              parallelization: 0.5
+            """,
+            "expected": 5
+            }
+             ]
 
         for i in range(len(cases)):
             c = cases[i]
