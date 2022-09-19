@@ -9,6 +9,7 @@ def run(tasks):
     works = []
     done = set()
     while (len(tasks) > 0):
+        random.shuffle(tasks)
         pending = []
         group_done = set()
         for t in tasks:

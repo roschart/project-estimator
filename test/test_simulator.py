@@ -166,7 +166,7 @@ class TestRangeDurations(unittest.TestCase):
               - duration : [6, 15]
                 parallelization: 0.5
               """,
-           "expected": 7},
+           "expected": 6},
             {"tasks":"""
             - duration : [3, 5]
               parallelization: 0.5
@@ -175,7 +175,7 @@ class TestRangeDurations(unittest.TestCase):
             - duration : [2, 8]
               parallelization: 0.5
             """,
-            "expected": 11
+            "expected": 9
             }
              ]
 

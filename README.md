@@ -17,6 +17,7 @@ Have a yaml with a tasks that must be simulated
   parallelization: [0.5, 1.]
   predecesors: [1]
 ```
+
 ## How to run the test
 
 - Activate the environment `source venv/bin/activate`
