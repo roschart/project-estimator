@@ -154,28 +154,28 @@ class TestValidation(unittest.TestCase):
 
 class TestRangeDurations(unittest.TestCase):
     def test_ranges(self):
-        cases = [{
-            "tasks": """
-                  - duration : [3, 5]
-                    parallelization: 0.5
-                  """,
-            "expected": 5},
-            {"tasks": """
-                  - duration : [3, 5]
-                    parallelization: 0.5
-                  - duration : [6, 15]
-                    parallelization: 0.5
-                  """,
-             "expected": 7},
+        cases = [
+          {"tasks": """
+              - duration : [3, 5]
+                parallelization: 0.5
+              """,
+           "expected": 5},
+          {"tasks": """
+              - duration : [3, 5]
+                parallelization: 0.5
+              - duration : [6, 15]
+                parallelization: 0.5
+              """,
+           "expected": 7},
             {"tasks":"""
-            - duration : [3, 6]
+            - duration : [3, 5]
               parallelization: 0.5
-            - duration : [6, 10]
+            - duration : [6, 15]
               parallelization: 1
             - duration : [2, 8]
               parallelization: 0.5
             """,
-            "expected": 5
+            "expected": 11
             }
              ]
 
